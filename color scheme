@@ -1,0 +1,21 @@
+color styles
+
+indigo:
+background: #3F51B5		500
+headers: #1A237E		900
+wells: #303F9F			700
+serverHeaders: #C5CAE9	100
+
+cyan:
+background: #00BCD4		500
+headers: #00838F 		800
+wells: #00ACC1			600
+serverHeaders: #B2EBF2	100
+
+
+deep purple:
+background:#7E57C2
+headers: #4527A0
+wells: #5E35B1
+serverHeaders:#D1C4E9
+
