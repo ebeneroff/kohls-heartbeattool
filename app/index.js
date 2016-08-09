@@ -4,21 +4,41 @@ var AttentionRequired = require('./AttentionRequired');
 var CurrrentlyRunning = require('./CurrentlyRunning');
 var PropTypes = React.PropTypes;
 var styles = require('./style');
-var serverArray = require('./DummyData');
-
+var serverArray;
 var onlineServers = [];
 var offlineServers = [];
 
-for (var i = serverArray.length - 1; i >= 0; i--) {
-	if (serverArray[i].Online === true)
-	{
-		onlineServers.push(serverArray[i]);
-	}
-	else
-	{
-		offlineServers.push(serverArray[i]);
-	}
+function ServiceCheck(){
+	$(function(){
+		$.ajax({
+			url:"http://localhost:3000/api/servers",
+			type: "get",
+			dataType: "json",
+		}).done(function(json){
+			serverArray = json.servers;
+			console.log(serverArray);
+			for (var i = serverArray.length - 1; i >= 0; i--) {
+				if (serverArray[i].Online === true)
+				{
+					onlineServers.push(serverArray[i]);
+				}
+				else
+				{
+					offlineServers.push(serverArray[i]);
+				}
+			}
+			ReactDOM.render(
+				<Main offlineServers={offlineServers} onlineServers={onlineServers}/>,
+				document.getElementById('app')
+			);
+		})
+	})
 }
+
+$(document).ready(function(){
+		ServiceCheck();
+		//setInterval(ServiceCheck, 10000);
+	});	
 
 var Main = React.createClass({
 	render: function(){
@@ -43,7 +63,3 @@ Main.PropTypes = {
 	onlineServers: PropTypes.array.isRequired
 }
 
-ReactDOM.render(
-	<Main offlineServers={offlineServers} onlineServers={onlineServers}/>,
-	document.getElementById('app')
-);
